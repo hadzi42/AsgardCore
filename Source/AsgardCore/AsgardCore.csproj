@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <PlatformTarget>x64</PlatformTarget>
+    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <Platforms>x64</Platforms>
+    <IsPublishable>False</IsPublishable>
+    <GenerateAssemblyInfo>True</GenerateAssemblyInfo>
+    <GeneratedAssemblyInfoFile>Properties/AssemblyInfo.cs</GeneratedAssemblyInfoFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <DebugType>portable</DebugType>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <DebugType>portable</DebugType>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+
+</Project>
