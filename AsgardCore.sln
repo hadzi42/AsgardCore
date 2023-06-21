@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33801.468
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsgardCore", "Source\AsgardCore\AsgardCore.csproj", "{6BA2D287-9FFF-4919-B53A-4B80A507646C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsgardCore", "Source\AsgardCore\AsgardCore.csproj", "{6BA2D287-9FFF-4919-B53A-4B80A507646C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsgardCore_uTest", "Test\AsgardCore_uTest\AsgardCore_uTest.csproj", "{9129FDD1-C56B-44BE-A8DE-55137DC8D99B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AsgardCore.Test", "Source\AsgardCore.Test\AsgardCore.Test.csproj", "{817A753D-6A5A-4E08-80E4-C95E299542DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,6 +18,12 @@ Global
 		{6BA2D287-9FFF-4919-B53A-4B80A507646C}.Debug|x64.ActiveCfg = Debug|x64
 		{6BA2D287-9FFF-4919-B53A-4B80A507646C}.Debug|x64.Build.0 = Debug|x64
 		{6BA2D287-9FFF-4919-B53A-4B80A507646C}.Release|x64.ActiveCfg = Release|x64
+		{9129FDD1-C56B-44BE-A8DE-55137DC8D99B}.Debug|x64.ActiveCfg = Debug|x64
+		{9129FDD1-C56B-44BE-A8DE-55137DC8D99B}.Debug|x64.Build.0 = Debug|x64
+		{9129FDD1-C56B-44BE-A8DE-55137DC8D99B}.Release|x64.ActiveCfg = Release|x64
+		{817A753D-6A5A-4E08-80E4-C95E299542DA}.Debug|x64.ActiveCfg = Debug|x64
+		{817A753D-6A5A-4E08-80E4-C95E299542DA}.Debug|x64.Build.0 = Debug|x64
+		{817A753D-6A5A-4E08-80E4-C95E299542DA}.Release|x64.ActiveCfg = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

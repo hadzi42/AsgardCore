@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace AsgardCore
 {
     /// <summary>
-    /// ONLY WORKS ON WINDOWS!
+    /// ONLY WORKS ON WINDOWS! Uses native shlwapi.dll.
     /// Implements sorting used in Windows Explorer.
     /// This considers numbers in file names, so items with increasing numbers will follow each other.
     /// </summary>
@@ -14,6 +14,12 @@ namespace AsgardCore
         /// A global instance of <see cref="NaturalComparer"/>.
         /// </summary>
         public static readonly NaturalComparer Instance = new NaturalComparer();
+
+        /// <summary>
+        /// Do not let others create new instances. Everybody should use <see cref="Instance"/>.
+        /// </summary>
+        private NaturalComparer()
+        { }
 
         /// <summary>
         /// Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.
