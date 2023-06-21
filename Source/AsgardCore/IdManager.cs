@@ -9,27 +9,27 @@ namespace AsgardCore
     /// </summary>
     public sealed class IdManager : IIdManager
     {
-        private readonly object _Locker = new object();
-        private readonly List<int> _FreeIDs;
-        private int _NextID;
-        private readonly int _FirstID;
-        private int _LastID;
+        internal readonly object _Locker = new object();
+        internal readonly List<int> _FreeIDs;
+        internal readonly int _FirstId;
+        internal int _NextId;
+        internal int _LastId;
 
         /// <summary>
         /// The first ID to be returned.
         /// </summary>
         public int FirstID
         {
-            get { return _FirstID; }
+            get { return _FirstId; }
         }
 
         /// <summary>
         /// Preview of the next ID to be returned.
-        /// Use <see cref="GenerateID"/> to actually acquire it.
+        /// Use <see cref="GenerateId"/> to actually acquire it.
         /// </summary>
         public int NextID
         {
-            get { return _FreeIDs.Count > 0 ? _FreeIDs[0] : _NextID; }
+            get { return _FreeIDs.Count > 0 ? _FreeIDs[0] : _NextId; }
         }
 
         /// <summary>
@@ -50,9 +50,9 @@ namespace AsgardCore
             if (firstID < 0)
                 throw new ArgumentException("The ID cannot be negative: " + firstID);
 
-            _NextID = firstID;
-            _FirstID = firstID;
-            _LastID = firstID;
+            _NextId = firstID;
+            _FirstId = firstID;
+            _LastId = firstID;
         }
 
         /// <summary>
@@ -60,9 +60,9 @@ namespace AsgardCore
         /// </summary>
         public IdManager(BinaryReader br)
         {
-            _FirstID = br.ReadInt32();
-            _LastID = br.ReadInt32();
-            _NextID = br.ReadInt32();
+            _FirstId = br.ReadInt32();
+            _LastId = br.ReadInt32();
+            _NextId = br.ReadInt32();
             _FreeIDs = Extensions.DeserializeIntList32(br);
         }
 
@@ -73,16 +73,16 @@ namespace AsgardCore
         {
             lock (_Locker)
             {
-                _NextID = _FirstID;
-                _LastID = _FirstID;
+                _NextId = _FirstId;
+                _LastId = _FirstId;
                 _FreeIDs.Clear();
             }
         }
 
         /// <summary>
-        /// Creating new ID (returning NextID in most cases) in a thread-safe manner.
+        /// Creates new ID (returning NextID in most cases) in a thread-safe manner.
         /// </summary>
-        public int GenerateID()
+        public int GenerateId()
         {
             int id;
             lock (_Locker)
@@ -94,9 +94,9 @@ namespace AsgardCore
                 }
                 else
                 {
-                    id = _NextID;
-                    _LastID = id;
-                    _NextID++;
+                    id = _NextId;
+                    _LastId = id;
+                    _NextId++;
                 }
             }
             return id;
@@ -107,8 +107,8 @@ namespace AsgardCore
         /// </summary>
         public void RecycleID(int id)
         {
-            if (id < _FirstID || id > _LastID || id == _NextID)
-                throw new ArgumentOutOfRangeException(id.ToStringInvariant());
+            if (id < _FirstId || id > _LastId || id == _NextId)
+                throw new ArgumentException(id.ToStringInvariant(), nameof(id));
 
             lock (_Locker)
             {
@@ -130,8 +130,8 @@ namespace AsgardCore
             {
                 foreach (int id in ids)
                 {
-                    if (id < _FirstID || id > _LastID || id == _NextID)
-                        throw new ArgumentOutOfRangeException(id.ToStringInvariant());
+                    if (id < _FirstId || id > _LastId || id == _NextId)
+                        throw new ArgumentException(id.ToStringInvariant());
 
                     if (!_FreeIDs.Contains(id))
                         _FreeIDs.Add(id);
@@ -145,9 +145,9 @@ namespace AsgardCore
         {
             lock (_Locker)
             {
-                bw.Write(_FirstID);
-                bw.Write(_LastID);
-                bw.Write(_NextID);
+                bw.Write(_FirstId);
+                bw.Write(_LastId);
+                bw.Write(_NextId);
                 _FreeIDs.Serialize32(bw);
             }
         }

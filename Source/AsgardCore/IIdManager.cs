@@ -12,7 +12,7 @@
 
         /// <summary>
         /// Preview of the next ID to be returned.
-        /// Use <see cref="GenerateID"/> to actually acquire it.
+        /// Use <see cref="GenerateId"/> to actually acquire it.
         /// </summary>
         int NextID { get; }
 
@@ -24,7 +24,7 @@
         /// <summary>
         /// Creating new ID (returning NextID in most cases) in a thread-safe manner.
         /// </summary>
-        int GenerateID();
+        int GenerateId();
 
         /// <summary>
         /// Makes the given ID to be re-assignable.
