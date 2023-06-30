@@ -28,7 +28,7 @@ namespace AsgardCore
         /// <param name="y"></param>
         /// <returns>A signed integer that indicates the relative values of x and y.</returns>
         [DllImport("shlwapi.dll", CharSet = CharSet.Unicode, ExactSpelling = true)]
-        public static extern int StrCmpLogicalW(string x, string y);
+        internal static extern int StrCmpLogicalW(string x, string y);
 
         /// <summary>
         /// Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.

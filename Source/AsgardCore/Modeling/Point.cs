@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace AsgardCore.Modelling
+namespace AsgardCore.Modeling
 {
     /// <summary>
     /// Represent a 2D integer point.
@@ -170,6 +170,10 @@ namespace AsgardCore.Modelling
             return new Point(X, Y);
         }
 
+        /// <summary>
+        /// Determines the equality of two <see cref="Point"/>s.
+        /// Faster than the <see cref="Equals(object)"/> method.
+        /// </summary>
         public bool Equals(Point other)
         {
             return
@@ -177,6 +181,10 @@ namespace AsgardCore.Modelling
                 Y == other.Y;
         }
 
+        /// <summary>
+        /// Determines the equality of two <see cref="Point"/>s.
+        /// SLOWER than the <see cref="Equals(Point)"/> method or '==' operator.
+        /// </summary>
         public override bool Equals(object obj)
         {
             if (!(obj is Point))
@@ -195,11 +203,17 @@ namespace AsgardCore.Modelling
             return (X << 16) + Y;
         }
 
+        /// <summary>
+        /// Gets this <see cref="Point"/>'s string representation as: (x, y).
+        /// </summary>
         public override string ToString()
         {
             return "(" + X + ", " + Y + ")";
         }
 
+        /// <summary>
+        /// Gets this <see cref="Point"/> instance to the given binary stream.
+        /// </summary>
         public void Serialize(BinaryWriter bw)
         {
             bw.Write(X);
