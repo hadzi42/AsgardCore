@@ -9,6 +9,7 @@ namespace AsgardCore.MVVM
     /// <summary>
     /// Extension of <see cref="ObservableCollection{T}"/> with range-operations and natural sorting.
     /// </summary>
+    /// <remarks>Natural sorting works only on Windows!</remarks>
     public sealed class RangeObservableCollection<T> : ObservableCollection<T>
     {
         /// <summary>
@@ -59,26 +60,51 @@ namespace AsgardCore.MVVM
 
         /// <summary>
         /// Adds the item to the collection using stable, natural sorting.
+        /// Assumes that the original <see cref="RangeObservableCollection{T}"/> is already sorted.
         /// </summary>
         /// <param name="item">The item to add.</param>
         /// <param name="selector">The selector to be used for natural sorting.</param>
-        public void AddAndSort(T item, Func<T, string> selector)//todo optimize with insert
+        public void AddToSorted(T item, Func<T, string> selector)
         {
+            string text = selector(item);
+            int count = Count;
+            for (int i = 0; i < count; i++)
+            {
+                if (NaturalComparer.Instance.Compare(selector(Items[i]), text) > 0)
+                {
+                    Items.Insert(i, item);
+                    OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, i));
+                    return;
+                }
+            }
+
             Items.Add(item);
-            SortNatural(selector);
+            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, count));
         }
 
         /// <summary>
-        /// Adds the item to the collection using stable sorting.
+        /// Adds the item to the collection using stable, natural sorting.
+        /// Assumes that the original <see cref="RangeObservableCollection{T}"/> is already sorted.
         /// </summary>
         /// <param name="item">The item to add.</param>
         /// <param name="selector">The selector to be used for sorting.</param>
-        public void AddAndSort<TKey>(T item, Func<T, TKey> selector)//todo optimize with insert
+        public void AddToSorted<TKey>(T item, Func<T, TKey> selector)
+            where TKey : IComparable<TKey>
         {
+            TKey key = selector(item);
+            int count = Count;
+            for (int i = 0; i < count; i++)
+            {
+                if (selector(Items[i]).CompareTo(key) > 0)
+                {
+                    Items.Insert(i, item);
+                    OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, i));
+                    return;
+                }
+            }
+
             Items.Add(item);
-            List<T> sorted = new List<T>(Items.OrderBy(selector));
-            Items.Clear();
-            AddRange(sorted);
+            OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, count));
         }
 
         /// <summary>
@@ -130,7 +156,7 @@ namespace AsgardCore.MVVM
         /// <summary>
         /// Adds the given items to the collection using a stable, natural sorting and raises a <see cref="ObservableCollection{T}.CollectionChanged"/> event.
         /// </summary>
-        public void AddRangeSorted(IEnumerable<T> items, Func<T, string> selector)
+        public void AddRangeAndSortNatural(IEnumerable<T> items, Func<T, string> selector)
         {
             foreach (T item in items)
                 Items.Add(item);
@@ -140,7 +166,7 @@ namespace AsgardCore.MVVM
         /// <summary>
         /// Adds the given items to the collection using a stable, natural sorting and raises a <see cref="ObservableCollection{T}.CollectionChanged"/> event.
         /// </summary>
-        public void AddRangeSorted(List<T> items, Func<T, string> selector)
+        public void AddRangeAndSortNatural(List<T> items, Func<T, string> selector)
         {
             int count = items.Count;
             for (int i = 0; i < count; i++)
@@ -235,7 +261,7 @@ namespace AsgardCore.MVVM
         /// <summary>
         /// Removes all items from the collection, then adds the given items to it using a stable, natural sorting.
         /// </summary>
-        public void ReplaceAllSorted(IEnumerable<T> items, Func<T, string> selector)
+        public void ReplaceAllAndSortNatural(IEnumerable<T> items, Func<T, string> selector)
         {
             Items.Clear();
             foreach (T item in items)
@@ -246,7 +272,7 @@ namespace AsgardCore.MVVM
         /// <summary>
         /// Removes all items from the collection, then adds the given items to it using a stable, natural sorting.
         /// </summary>
-        public void ReplaceAllSorted(List<T> items, Func<T, string> selector)
+        public void ReplaceAllAndSortNatural(List<T> items, Func<T, string> selector)
         {
             Items.Clear();
 
@@ -276,8 +302,11 @@ namespace AsgardCore.MVVM
         public void SortNatural(Func<T, string> selector)
         {
             List<T> sorted = new List<T>(Items.OrderBy(selector, NaturalComparer.Instance));
-            Items.Clear();
-            AddRange(sorted);
+            int count = sorted.Count;
+            for (int i = 0; i < count; i++)
+                Items[i] = sorted[i];
+
+            OnCollectionChanged(ResetEventArgs);
         }
 
         /// <summary>

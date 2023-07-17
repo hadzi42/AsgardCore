@@ -15,6 +15,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7D924EEC-1E15-4104-841B-83957063F0B1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PerformanceTool", "Test\PerformanceTool\PerformanceTool.csproj", "{442EC8D3-3222-4E16-9238-8DB120007B95}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -33,9 +37,17 @@ Global
 		{817A753D-6A5A-4E08-80E4-C95E299542DA}.Debug|x64.Build.0 = Debug|x64
 		{817A753D-6A5A-4E08-80E4-C95E299542DA}.Release|x64.ActiveCfg = Release|x64
 		{817A753D-6A5A-4E08-80E4-C95E299542DA}.Release|x64.Build.0 = Release|x64
+		{442EC8D3-3222-4E16-9238-8DB120007B95}.Debug|x64.ActiveCfg = Debug|x64
+		{442EC8D3-3222-4E16-9238-8DB120007B95}.Debug|x64.Build.0 = Debug|x64
+		{442EC8D3-3222-4E16-9238-8DB120007B95}.Release|x64.ActiveCfg = Release|x64
+		{442EC8D3-3222-4E16-9238-8DB120007B95}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9129FDD1-C56B-44BE-A8DE-55137DC8D99B} = {7D924EEC-1E15-4104-841B-83957063F0B1}
+		{442EC8D3-3222-4E16-9238-8DB120007B95} = {7D924EEC-1E15-4104-841B-83957063F0B1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C2D5B11A-FA87-4D38-9D3C-55913126974E}

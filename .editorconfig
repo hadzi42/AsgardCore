@@ -911,6 +911,9 @@ dotnet_diagnostic.IDE0059.severity = error
 # Remove unused parameter
 dotnet_diagnostic.IDE0060.severity = warning
 
+# Simplify new expression
+dotnet_diagnostic.IDE0090.severity = none
+
 # Avoid using accessing Assembly file path when publishing as a single-file
 dotnet_diagnostic.IL3000.severity = none
 
