@@ -63,6 +63,22 @@ namespace Test.AsgardCore.Modelling
         }
 
         [Test]
+        public void Operator_Equals_HappyPath()
+        {
+            Assert.IsTrue(new Point(1, 2) == new Point(1, 2));
+            Assert.IsFalse(new Point(1, 1) == new Point(1, 2));
+            Assert.IsFalse(new Point(2, 2) == new Point(1, 2));
+        }
+
+        [Test]
+        public void Operator_NotEquals_HappyPath()
+        {
+            Assert.IsFalse(new Point(1, 2) != new Point(1, 2));
+            Assert.IsTrue(new Point(1, 1) != new Point(1, 2));
+            Assert.IsTrue(new Point(2, 2) != new Point(1, 2));
+        }
+
+        [Test]
         public void Equals_Object_HappyPath()
         {
             _Point = new Point(1, 2);
@@ -128,6 +144,31 @@ namespace Test.AsgardCore.Modelling
             _Point = new Point(1, 2);
 
             Assert.AreEqual("(1, 2)", _Point.ToString());
+        }
+
+        [Test]
+        public void GetNeighbors_Origin_ReturnsPointList()
+        {
+            List<Point> neighbors = Point.Origin.GetNeighbors();
+            CollectionAssert.AreEqual(Point.Directions, neighbors);
+        }
+
+        [Test]
+        public void GetNeighbors_NotOrigin_ReturnsPointList()
+        {
+            List<Point> neighbors = new Point(3, 4).GetNeighbors();
+            Point[] expectedNeighbors = new[]
+            {
+                new Point(3, 5),
+                new Point(3, 3),
+                new Point(4, 5),
+                new Point(4, 3),
+                new Point(2, 5),
+                new Point(2, 3),
+                new Point(4, 4),
+                new Point(2, 4)
+            };
+            CollectionAssert.AreEquivalent(expectedNeighbors, neighbors);
         }
 
         [Test]

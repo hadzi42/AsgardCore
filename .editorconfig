@@ -911,6 +911,9 @@ dotnet_diagnostic.IDE0059.severity = error
 # Remove unused parameter
 dotnet_diagnostic.IDE0060.severity = warning
 
+# Use simple 'using' statement
+dotnet_diagnostic.IDE0063.severity = none
+
 # Simplify new expression
 dotnet_diagnostic.IDE0090.severity = none
 

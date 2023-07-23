@@ -11,7 +11,7 @@ namespace AsgardCore_uTest
     internal sealed class IdManagerTests
     {
         [Test]
-        public void IdManager_AllCases_TypeIsSealed()
+        public void IdManager_Type_TypeIsSealed()
         {
             IdManager i = new IdManager();
 

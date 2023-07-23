@@ -146,7 +146,7 @@ namespace AsgardCore.Modeling
         /// <summary>
         /// Calculates the 8 neighbors of the current <see cref="Point"/>.
         /// </summary>
-        public List<Point> CalculateNeighbors()
+        public List<Point> GetNeighbors()
         {
             List<Point> result = new List<Point>(8);
             for (int i = 0; i < 8; i++)
@@ -187,11 +187,8 @@ namespace AsgardCore.Modeling
         /// </summary>
         public override bool Equals(object obj)
         {
-            if (!(obj is Point))
-                return false;
-
-            Point other = (Point)obj;
             return
+                obj is Point other &&
                 X == other.X &&
                 Y == other.Y;
         }
