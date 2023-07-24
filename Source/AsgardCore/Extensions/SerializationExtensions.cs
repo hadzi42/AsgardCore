@@ -6,28 +6,86 @@ namespace AsgardCore
 {
     public static partial class Extensions
     {
-        public static void Serialize32(this IList<byte> list, BinaryWriter bw)
+        public static void Serialize32(this IReadOnlyList<byte> list, BinaryWriter bw)
         {
             bw.Write(list.Count);
             for (int i = 0; i < list.Count; i++)
                 bw.Write(list[i]);
         }
 
-        public static void Serialize32(this IList<int> list, BinaryWriter bw)
+        public static void Serialize32(this byte[] list, BinaryWriter bw)
+        {
+            bw.Write(list.Length);
+            for (int i = 0; i < list.Length; i++)
+                bw.Write(list[i]);
+        }
+
+        public static void Serialize32(this List<byte> list, BinaryWriter bw)
         {
             bw.Write(list.Count);
             for (int i = 0; i < list.Count; i++)
                 bw.Write(list[i]);
         }
 
-        public static void Serialize32(this IList<string> list, BinaryWriter bw)
+        public static void Serialize32(this IReadOnlyList<int> list, BinaryWriter bw)
         {
             bw.Write(list.Count);
             for (int i = 0; i < list.Count; i++)
                 bw.Write(list[i]);
         }
 
-        public static void Serialize32<T>(this IList<T> list, BinaryWriter bw)
+        public static void Serialize32(this int[] list, BinaryWriter bw)
+        {
+            bw.Write(list.Length);
+            for (int i = 0; i < list.Length; i++)
+                bw.Write(list[i]);
+        }
+
+        public static void Serialize32(this List<int> list, BinaryWriter bw)
+        {
+            bw.Write(list.Count);
+            for (int i = 0; i < list.Count; i++)
+                bw.Write(list[i]);
+        }
+
+        public static void Serialize32(this IReadOnlyList<string> list, BinaryWriter bw)
+        {
+            bw.Write(list.Count);
+            for (int i = 0; i < list.Count; i++)
+                bw.Write(list[i]);
+        }
+
+        public static void Serialize32(this string[] list, BinaryWriter bw)
+        {
+            bw.Write(list.Length);
+            for (int i = 0; i < list.Length; i++)
+                bw.Write(list[i]);
+        }
+
+        public static void Serialize32(this List<string> list, BinaryWriter bw)
+        {
+            bw.Write(list.Count);
+            for (int i = 0; i < list.Count; i++)
+                bw.Write(list[i]);
+        }
+
+        public static void Serialize32<T>(this IReadOnlyList<T> list, BinaryWriter bw)
+            where T : ISerializable
+        {
+            bw.Write(list.Count);
+            for (int i = 0; i < list.Count; i++)
+                list[i].Serialize(bw);
+        }
+
+        public static void Serialize32<T>(this T[] list, BinaryWriter bw)
+            where T : ISerializable
+        {
+            bw.Write(list.Length);
+            for (int i = 0; i < list.Length; i++)
+                list[i].Serialize(bw);
+        }
+
+        public static void Serialize32<T>(this List<T> list, BinaryWriter bw)
             where T : ISerializable
         {
             bw.Write(list.Count);
@@ -57,52 +115,9 @@ namespace AsgardCore
                 i.Serialize(bw);
         }
 
-        public static void Serialize32(this IDictionary<int, string> dict, BinaryWriter bw)
-        {
-            bw.Write(dict.Count);
-            foreach (var kvp in dict)
-            {
-                bw.Write(kvp.Key);
-                bw.Write(kvp.Value);
-            }
-        }
-
-        public static void Serialize32<T>(this IDictionary<int, T> dict, BinaryWriter bw)
-            where T : ISerializable
-        {
-            bw.Write(dict.Count);
-            foreach (var kvp in dict)
-            {
-                bw.Write(kvp.Key);
-                kvp.Value.Serialize(bw);
-            }
-        }
-
-        public static void Serialize32<T>(this IDictionary<string, T> dict, BinaryWriter bw)
-            where T : ISerializable
-        {
-            bw.Write(dict.Count);
-            foreach (var kvp in dict)
-            {
-                bw.Write(kvp.Key);
-                kvp.Value.Serialize(bw);
-            }
-        }
-
-        public static void Serialize32<TKey, TValue>(this Dictionary<TKey, TValue> dict, BinaryWriter bw)
-            where TKey : ISerializable
-            where TValue : ISerializable
-        {
-            bw.Write(dict.Count);
-            foreach (KeyValuePair<TKey, TValue> kvp in dict)
-            {
-                kvp.Key.Serialize(bw);
-                kvp.Value.Serialize(bw);
-            }
-        }
-
         /// <summary>
-        /// Serializes the given <see cref="ISerializable"/> instance to a byte array.
+        /// Serializes the given <see cref="ISerializable"/> instance to a byte array,
+        /// using <see cref="Encoding.UTF8"/> encoding.
         /// </summary>
         public static byte[] SerializeToByteArray(this ISerializable serializable)
         {

@@ -8,7 +8,7 @@ namespace PerformanceTool
     {
         public static void Main()
         {
-            BenchmarkRunner.Run(typeof(PointBenchmarks));
+            BenchmarkRunner.Run(typeof(SerializationBenchmarks));
         }
     }
 }

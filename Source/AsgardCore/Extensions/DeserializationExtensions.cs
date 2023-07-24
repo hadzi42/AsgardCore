@@ -12,6 +12,24 @@ namespace AsgardCore
             return br.ReadBytes(count);
         }
 
+        public static List<byte> DeserializeByteList32(BinaryReader br)
+        {
+            int count = br.ReadInt32();
+            List<byte> list = new List<byte>(count);
+            for (int i = 0; i < count; i++)
+                list.Add(br.ReadByte());
+            return list;
+        }
+
+        public static int[] DeserializeIntArray32(BinaryReader br)
+        {
+            int count = br.ReadInt32();
+            int[] list = new int[count];
+            for (int i = 0; i < count; i++)
+                list[i] = br.ReadInt32();
+            return list;
+        }
+
         public static List<int> DeserializeIntList32(BinaryReader br)
         {
             int count = br.ReadInt32();
@@ -21,12 +39,31 @@ namespace AsgardCore
             return list;
         }
 
+        public static string[] DeserializeStringArray32(BinaryReader br)
+        {
+            int count = br.ReadInt32();
+            string[] list = new string[count];
+            for (int i = 0; i < count; i++)
+                list[i] = br.ReadString();
+            return list;
+        }
+
         public static List<string> DeserializeStringList32(BinaryReader br)
         {
             int count = br.ReadInt32();
             List<string> list = new List<string>(count);
             for (int i = 0; i < count; i++)
                 list.Add(br.ReadString());
+            return list;
+        }
+
+        public static T[] DeserializeISerializableArray32<T>(BinaryReader br, Func<BinaryReader, T> deserializationAction)
+            where T : ISerializable
+        {
+            int count = br.ReadInt32();
+            T[] list = new T[count];
+            for (int i = 0; i < count; i++)
+                list[i] = deserializationAction(br);
             return list;
         }
 
@@ -66,46 +103,6 @@ namespace AsgardCore
             for (int i = 0; i < count; i++)
                 set.Add(br.ReadString());
             return set;
-        }
-
-        public static Dictionary<int, string> DeserializeIntStringDictionary32(BinaryReader br)
-        {
-            int count = br.ReadInt32();
-            Dictionary<int, string> dict = new Dictionary<int, string>(count);
-            for (int i = 0; i < count; i++)
-                dict[br.ReadInt32()] = br.ReadString();
-            return dict;
-        }
-
-        public static Dictionary<int, T> DeserializeIntISerializableDictionary32<T>(BinaryReader br, Func<BinaryReader, T> deserializationAction)
-            where T : ISerializable
-        {
-            int count = br.ReadInt32();
-            Dictionary<int, T> dict = new Dictionary<int, T>(count);
-            for (int i = 0; i < count; i++)
-                dict[br.ReadInt32()] = deserializationAction(br);
-            return dict;
-        }
-
-        public static Dictionary<string, T> DeserializeStringISerializableDictionary32<T>(BinaryReader br, Func<BinaryReader, T> deserializationAction)
-            where T : ISerializable
-        {
-            int count = br.ReadInt32();
-            Dictionary<string, T> dict = new Dictionary<string, T>(count);
-            for (int i = 0; i < count; i++)
-                dict[br.ReadString()] = deserializationAction(br);
-            return dict;
-        }
-
-        public static Dictionary<TKey, TValue> DeserializeISerializableDictionary32<TKey, TValue>(BinaryReader br, Func<BinaryReader, TKey> deserializeKey, Func<BinaryReader, TValue> deserializeValue)
-            where TKey : ISerializable
-            where TValue : ISerializable
-        {
-            int count = br.ReadInt32();
-            Dictionary<TKey, TValue> dict = new Dictionary<TKey, TValue>(count);
-            for (int i = 0; i < count; i++)
-                dict[deserializeKey(br)] = deserializeValue(br);
-            return dict;
         }
     }
 }
