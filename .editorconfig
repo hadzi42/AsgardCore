@@ -62,7 +62,7 @@ dotnet_diagnostic.CA1030.severity = none
 dotnet_diagnostic.CA1031.severity = none
 
 # CA1032: Implement standard exception constructors
-dotnet_diagnostic.CA1032.severity = none
+dotnet_diagnostic.CA1032.severity = error
 
 # CA1033: Interface methods should be callable by child types
 dotnet_diagnostic.CA1033.severity = error

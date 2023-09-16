@@ -6,6 +6,14 @@ namespace AsgardCore
     public static partial class Extensions
     {
         /// <summary>
+        /// Determines whether the given array is null or empty.
+        /// </summary>
+        public static bool IsNullOrEmpty<T>(this T[] array)
+        {
+            return array == null || array.Length == 0;
+        }
+
+        /// <summary>
         /// Converts the value of this instance to its equivalent culture-independent string representation (either "True" or "False").
         /// </summary>
         public static string ToStringInvariant(this bool b)

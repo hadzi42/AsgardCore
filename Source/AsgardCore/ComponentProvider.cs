@@ -183,8 +183,7 @@ namespace AsgardCore
             using (new ReadLock(_Lock))
             {
                 Type type = typeof(T);
-                object c;
-                if (_Components.TryGetValue(type, out c))
+                if (_Components.TryGetValue(type, out object c))
                     return (T)c;
 
                 T t;
@@ -215,8 +214,7 @@ namespace AsgardCore
         {
             using (new ReadLock(_Lock))
             {
-                object o;
-                _ComponentsWithName.TryGetValue(id, out o);
+                _ComponentsWithName.TryGetValue(id, out object o);
                 return (T)o;
             }
         }
