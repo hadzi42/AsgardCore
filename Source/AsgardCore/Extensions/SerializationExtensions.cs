@@ -115,6 +115,17 @@ namespace AsgardCore
                 i.Serialize(bw);
         }
 
+        public static void Serialize32<T>(this Dictionary<string, T> dictionary, BinaryWriter bw)
+             where T : ISerializable
+        {
+            bw.Write(dictionary.Count);
+            foreach (var kvp in dictionary)
+            {
+                bw.Write(kvp.Key);
+                kvp.Value.Serialize(bw);
+            }
+        }
+
         /// <summary>
         /// Serializes the given <see cref="ISerializable"/> instance to a byte array,
         /// using <see cref="Encoding.UTF8"/> encoding.

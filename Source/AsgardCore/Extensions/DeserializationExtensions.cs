@@ -104,5 +104,15 @@ namespace AsgardCore
                 set.Add(br.ReadString());
             return set;
         }
+
+        public static Dictionary<string, T> DeserializeStringISerializableDictionary32<T>(BinaryReader br, Func<BinaryReader, T> deserializationAction)
+            where T : ISerializable
+        {
+            int count = br.ReadInt32();
+            Dictionary<string, T> dictionary = new Dictionary<string, T>(count);
+            for (int i = 0; i < count; i++)
+                dictionary.Add(br.ReadString(), deserializationAction(br));
+            return dictionary;
+        }
     }
 }

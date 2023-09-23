@@ -179,11 +179,28 @@ namespace AsgardCore_uTest.Extensions
         }
 
         [Test]
+        public void Serialize32_StringISerializableDictionary_HappyPath()
+        {
+            Dictionary<string, Serializable> dictionary = new Dictionary<string, Serializable>
+            {
+                { "a", new Serializable(1) },
+                { "b", new Serializable(2) }
+            };
+            Dictionary<string, Serializable> copy = dictionary;
+
+            SerializationCore(ref dictionary, AcExtensions.Serialize32, br => AcExtensions.DeserializeStringISerializableDictionary32(br, Serializable.Restore));
+
+            Assert.AreNotSame(dictionary, copy);
+            CollectionAssert.AreEquivalent(new[] { "a", "b" }, dictionary.Keys);
+            CollectionAssert.AreEquivalent(new[] { new Serializable(1), new Serializable(2) }, dictionary.Values);
+        }
+
+        [Test]
         public void SerializeToByteArray_AllCases_ReturnsByteArray()
         {
             byte[] data = new Serializable(42).SerializeToByteArray();
             CollectionAssert.AreEqual(new byte[] { 42, 0, 0, 0 }, data);
-        }
+        }        
 
         public static void SerializationCore<T>(ref T obj, Action<T, BinaryWriter> serialization, Func<BinaryReader, T> deserialization)
         {
